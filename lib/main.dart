@@ -29,14 +29,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final myEmailController = TextEditingController();
   final myPasswordController = TextEditingController();
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    myEmailController.dispose();
-    myPasswordController.dispose();
-    super.dispose();
-  }
-  @override
+
 
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -118,14 +111,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     Container(
                       height: 40.0,
                       child: Material(
+
                         borderRadius: BorderRadius.circular(20.0),
                         shadowColor: Colors.greenAccent,
                         color: Colors.green,
                         elevation: 7.0,
                         child: GestureDetector(
-                          onTap: () {
-                            _log_in();
-                          },
+                          onTap: () => _log_in(),
                           child: Center(
                             child: Text(
                               'LOGIN',
@@ -155,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: <Widget>[
                             Center(
                               child:
-                              ImageIcon(AssetImage('assets/facebook.png')),
+                              ImageIcon(AssetImage('assets/fb.png')),
                             ),
                             SizedBox(width: 3.0),
                             Center(
@@ -198,13 +190,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
-
   void _log_in(){
+
     final body={
       "username" : myEmailController.text,
       "password" : myPasswordController.text
     };
+
     ApiService.login(body).then((sucess){
+      print('Hola');
       if (sucess){
         Navigator.push(
             context,
@@ -224,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
       }else{
         showDialog(
             builder: (context) => AlertDialog(
-              title: Text('No se pudo iniciar sesion, verifica tus datos'),
+              title: Text('No se pudo iniciar sesion, verifica tus datos ${myEmailController.text} && ${myPasswordController.text}'),
               actions: <Widget>[
                 FlatButton(onPressed: (){
                   Navigator.pop(context);
@@ -237,6 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     });
   }
+
 }
 
 /*
